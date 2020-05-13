@@ -18,7 +18,7 @@ d3.csv("data/data.csv").then(function(data){
 
     //x-axis
     var x = d3.scaleLinear()
-        .domain([0,25])
+        .domain([25,50])
         .range([0,width]);
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -26,7 +26,7 @@ d3.csv("data/data.csv").then(function(data){
 
     //y-axis
     var y = d3.scaleLinear()
-        .domain([0,30])
+        .domain([5,35])
         .range([height,0]);
     svg.append("g")
         .call(d3.axisLeft(y));
@@ -68,8 +68,32 @@ d3.csv("data/data.csv").then(function(data){
 
     //update the plot
     function updatePlot(choice){
+        d3.select("svg").remove();
         if (choice === "Age VS Smokers"){
-            svg.append('g')
+            //svg object
+            var svg = d3.select("#scatter")
+            .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+                .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+            //x-axis
+            var x = d3.scaleLinear()
+                .domain([25,50])
+                .range([0,width]);
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+            //y-axis
+            var y = d3.scaleLinear()
+                .domain([5,35])
+                .range([height,0]);
+            svg.append("g")
+                .call(d3.axisLeft(y));
+            
+            svg.append("g")
             .selectAll("circle")
             .data(data)
             .enter()
@@ -80,7 +104,7 @@ d3.csv("data/data.csv").then(function(data){
                 .attr("opacity", ".8")
                 .style("fill", "#565051")
 
-            svg.append('g')
+            svg.append("g")
             .selectAll("text")
             .data(data)
             .enter()
@@ -95,7 +119,31 @@ d3.csv("data/data.csv").then(function(data){
             yLabel = "Smokers (%)";
         }
         else if(choice === "Poverty Vs Healthcare"){
-            svg.append('g')
+        //svg object
+        var svg = d3.select("#scatter")
+        .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+        //x-axis    
+        var x = d3.scaleLinear()
+            .domain([0,25])
+            .range([0,width]);
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        //y-axis
+        var y = d3.scaleLinear()
+            .domain([0,30])
+            .range([height,0]);
+        svg.append("g")
+            .call(d3.axisLeft(y));
+            
+            
+            svg.append("g")
                 .selectAll("circle")
                 .data(data)
                 .enter()
@@ -106,7 +154,7 @@ d3.csv("data/data.csv").then(function(data){
                     .attr("opacity", ".8")
                     .style("fill", "#565051")
 
-            svg.append('g')
+            svg.append("g")
                 .selectAll("text")
                 .data(data)
                 .enter()
@@ -121,7 +169,30 @@ d3.csv("data/data.csv").then(function(data){
             yLabel = "Lacks Healthcare (%)";
         }
         else if(choice === "Income VS Obesity"){
-                svg.append('g')
+            //svg object
+            var svg = d3.select("#scatter")
+            .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+                .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+            
+        //x-axis    
+        var x = d3.scaleLinear()
+            .domain([35000,80000])
+            .range([0,width]);
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        //y-axis
+        var y = d3.scaleLinear()
+            .domain([15,40])
+            .range([height,0]);
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+            svg.append("g")
                 .selectAll("circle")
                 .data(data)
                 .enter()
@@ -132,12 +203,12 @@ d3.csv("data/data.csv").then(function(data){
                     .attr("opacity", ".8")
                     .style("fill", "#565051")
 
-            svg.append('g')
+            svg.append("g")
                 .selectAll("text")
                 .data(data)
                 .enter()
                 .append("text")
-                    .attr("x", function (d) { return x(d.income-.25); })
+                    .attr("x", function (d) { return x(d.income-350); })
                     .attr("y", function (d) { return y(d.obesity-.15); })
                     .text(function(d){ return d.abbr})
                     .attr("font-size", "9px")
