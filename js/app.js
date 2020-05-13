@@ -48,6 +48,7 @@ d3.csv("data/data.csv").then(function(data){
             .text(function(d){ return d.abbr})
             .attr("font-size", "9px")
             .attr("fill", "white");
+    
     // Add the x Axis
     svg.append("g")
     .attr("transform", "translate(0," + height + ")")

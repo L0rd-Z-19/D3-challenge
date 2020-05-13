@@ -70,6 +70,7 @@ d3.csv("data/data.csv").then(function(data){
     .on("click",function(){
         xAxis = function setX(d) { return x(d.poverty); };
         draw(data);
+        console.log("click");
     })
     .text("In Poverty (%)");
 
@@ -81,6 +82,7 @@ d3.csv("data/data.csv").then(function(data){
     .on("click",function(){
         xAxis = function setX(d) { return x(d.age); };
         draw(data);
+        console.log("click");
     })
     .text("Age (Median)");
 
@@ -92,6 +94,7 @@ d3.csv("data/data.csv").then(function(data){
     .on("click",function(){
         xAxis = function setX(d) { return x(d.income); };
         draw(data);
+        console.log("click");
     })
     .text("Household Income (Median)");
     
@@ -109,6 +112,7 @@ d3.csv("data/data.csv").then(function(data){
         .on("click",function(){
             yAxis = function setY(d) { return y(d.healthcare); };
             draw(data);
+            console.log("click");
         })
         .text("Lacks Healthcare (%)");
 
@@ -122,6 +126,7 @@ d3.csv("data/data.csv").then(function(data){
         .on("click",function(){
             yAxis = function setY(d) { return y(d.obesity); };
             draw(data);
+            console.log("click");
         })
         .text("Obese (%)");
     
@@ -135,7 +140,7 @@ d3.csv("data/data.csv").then(function(data){
         .on("click",function(){
             yAxis = function setY(d) { return y(d.smokes); };
             draw(data);
+            console.log("click");
         })
         .text("Smokes (%)");
-
 })
