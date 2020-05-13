@@ -1,5 +1,5 @@
 //full data 
-d3.csv("/data/data.csv").then(function(data){
+d3.csv("data/data.csv").then(function(data){
 
     //Plot the data!!!!
     var margin = {top: 10, right: 30, bottom: 30, left: 60},
@@ -29,14 +29,34 @@ d3.csv("/data/data.csv").then(function(data){
     svg.append("g")
         .call(d3.axisLeft(y));
 
-//
-//
-//
-    // //GET THE DATA
-//
-//
-//
+    var xAxis = function setX(d) { return x(d.poverty); }
+    var yAxis = function setY(d) { return y(d.healthcare); }
 
+    //GET THE DATA
+    draw(data);
+    function draw(data){
+        svg.append('g')
+        .selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+            .attr("cx", xAxis)
+            .attr("cy",yAxis)
+            .attr("r", 10)
+            .attr("opacity", ".8")
+            .style("fill", "#565051")
+
+        svg.append('g')
+            .selectAll("text")
+            .data(data)
+            .enter()
+            .append("text")
+                .attr("x",xAxis)
+                .attr("y", yAxis)
+                .text(function(d){ return d.abbr})
+                .attr("font-size", "9px")
+                .attr("fill", "white");
+    }
     // Add the x Axis
     svg.append("g")
     .attr("transform", "translate(0," + height + ")")
@@ -46,18 +66,33 @@ d3.csv("/data/data.csv").then(function(data){
     .attr("transform",
         "translate(" + (width/2) + " ," + (height + margin.top + 18) + ")")
     .style("text-anchor", "middle")
+    //on Click to show data
+    .on("click",function(){
+        xAxis = function setX(d) { return x(d.poverty); };
+        draw(data);
+    })
     .text("In Poverty (%)");
 
     svg.append("text")             
     .attr("transform",
         "translate(" + (width/6) + " ," + (height + margin.top + 18) + ")")
     .style("text-anchor", "middle")
+    //on Click to show data
+    .on("click",function(){
+        xAxis = function setX(d) { return x(d.age); };
+        draw(data);
+    })
     .text("Age (Median)");
 
     svg.append("text")             
     .attr("transform",
         "translate(" + (width/1.2) + " ," + (height + margin.top + 18) + ")")
     .style("text-anchor", "middle")
+    //on Click to show data
+    .on("click",function(){
+        xAxis = function setX(d) { return x(d.income); };
+        draw(data);
+    })
     .text("Household Income (Median)");
     
     // Add the y Axis
@@ -70,14 +105,24 @@ d3.csv("/data/data.csv").then(function(data){
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
+        //on Click to show data
+        .on("click",function(){
+            yAxis = function setY(d) { return y(d.healthcare); };
+            draw(data);
+        })
         .text("Lacks Healthcare (%)");
-        
+
     svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 - margin.left)
         .attr("x",200 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
+        //on Click to show data
+        .on("click",function(){
+            yAxis = function setY(d) { return y(d.obesity); };
+            draw(data);
+        })
         .text("Obese (%)");
     
     svg.append("text")
@@ -86,5 +131,11 @@ d3.csv("/data/data.csv").then(function(data){
         .attr("x",-200 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
+        //on Click to show data
+        .on("click",function(){
+            yAxis = function setY(d) { return y(d.smokes); };
+            draw(data);
+        })
         .text("Smokes (%)");
+
 })

@@ -56,7 +56,7 @@ d3.csv("data/data.csv").then(function(data){
     // text label for the x axis
     svg.append("text")             
     .attr("transform",
-        "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+        "translate(" + (width/2) + " ," + (height + margin.top + 18) + ")")
     .style("text-anchor", "middle")
     .text("In Poverty (%)");
 
