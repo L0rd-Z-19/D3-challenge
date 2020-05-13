@@ -45,27 +45,40 @@ d3.csv("data/data.csv").then(function(data){
 
     //starter plot
     svg.append('g')
-    .selectAll("circle")
+    
+    svg.append('g')
+    .selectAll("text")
+    .data(data)
+    .enter()
+    .append("text")
+        .attr("x", function (d) { return x(d.age-.25); })
+        .attr("y", function (d) { return y(d.smokes-.15); })
+        .text(function(d){ return d.abbr})
+        .attr("font-size", "9px")
+        .attr("fill", "black");
+    
+    var circles = svg.selectAll("circle")
     .data(data)
     .enter()
     .append("circle")
         .attr("cx", function (d) { return x(d.age); })
         .attr("cy", function (d) { return y(d.smokes); })
         .attr("r", 10)
-        .attr("opacity", ".8")
+        .attr("opacity", ".5")
         .style("fill", "#565051")
+        .attr("class", function(d) {return d.abbr})
 
-    svg.append('g')
-        .selectAll("text")
-        .data(data)
-        .enter()
-        .append("text")
-            .attr("x", function (d) { return x(d.age-.25); })
-            .attr("y", function (d) { return y(d.smokes-.15); })
-            .text(function(d){ return d.abbr})
-            .attr("font-size", "9px")
-            .attr("fill", "white");
+    circles.on("mouseover", function(d){
+        var states = d3.selectAll('circle.' + d.abbr)
+            .attr("r",12)
+            .style("fill", "#7B241C");
+    })
 
+    circles.on("mouseout", function(d){
+        d3.select('circle.' + d.abbr)
+            .attr("r",10)
+            .style("fill", "#565051")
+    })
     //update the plot
     function updatePlot(choice){
         d3.select("svg").remove();
@@ -92,18 +105,7 @@ d3.csv("data/data.csv").then(function(data){
                 .range([height,0]);
             svg.append("g")
                 .call(d3.axisLeft(y));
-            
-            svg.append("g")
-            .selectAll("circle")
-            .data(data)
-            .enter()
-            .append("circle")
-                .attr("cx", function (d) { return x(d.age); })
-                .attr("cy", function (d) { return y(d.smokes); })
-                .attr("r", 10)
-                .attr("opacity", ".8")
-                .style("fill", "#565051")
-
+           
             svg.append("g")
             .selectAll("text")
             .data(data)
@@ -113,7 +115,19 @@ d3.csv("data/data.csv").then(function(data){
                 .attr("y", function (d) { return y(d.smokes-.15); })
                 .text(function(d){ return d.abbr})
                 .attr("font-size", "9px")
-                .attr("fill", "white");
+                .attr("fill", "black");
+
+            svg.append("g")
+            .selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+                .attr("cx", function (d) { return x(d.age); })
+                .attr("cy", function (d) { return y(d.smokes); })
+                .attr("r", 10)
+                .attr("opacity", ".5")
+                .style("fill", "#565051")
+                .attr("class", function(d) {return d.abbr});
 
             xLabel = "Age (Median)";
             yLabel = "Smokers (%)";
@@ -142,18 +156,6 @@ d3.csv("data/data.csv").then(function(data){
         svg.append("g")
             .call(d3.axisLeft(y));
             
-            
-            svg.append("g")
-                .selectAll("circle")
-                .data(data)
-                .enter()
-                .append("circle")
-                    .attr("cx", function (d) { return x(d.poverty); })
-                    .attr("cy", function (d) { return y(d.healthcare); })
-                    .attr("r", 10)
-                    .attr("opacity", ".8")
-                    .style("fill", "#565051")
-
             svg.append("g")
                 .selectAll("text")
                 .data(data)
@@ -163,7 +165,19 @@ d3.csv("data/data.csv").then(function(data){
                     .attr("y", function (d) { return y(d.healthcare-.15); })
                     .text(function(d){ return d.abbr})
                     .attr("font-size", "9px")
-                    .attr("fill", "white");
+                    .attr("fill", "black");
+            
+            svg.append("g")
+                .selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                    .attr("cx", function (d) { return x(d.poverty); })
+                    .attr("cy", function (d) { return y(d.healthcare); })
+                    .attr("r", 10)
+                    .attr("opacity", ".5")
+                    .style("fill", "#565051")
+                    .attr("class", function(d) {return d.abbr});
 
             xLabel = "In Poverty (%)";
             yLabel = "Lacks Healthcare (%)";
@@ -193,17 +207,6 @@ d3.csv("data/data.csv").then(function(data){
             .call(d3.axisLeft(y));
 
             svg.append("g")
-                .selectAll("circle")
-                .data(data)
-                .enter()
-                .append("circle")
-                    .attr("cx", function (d) { return x(d.income); })
-                    .attr("cy", function (d) { return y(d.obesity); })
-                    .attr("r", 10)
-                    .attr("opacity", ".8")
-                    .style("fill", "#565051")
-
-            svg.append("g")
                 .selectAll("text")
                 .data(data)
                 .enter()
@@ -212,7 +215,19 @@ d3.csv("data/data.csv").then(function(data){
                     .attr("y", function (d) { return y(d.obesity-.15); })
                     .text(function(d){ return d.abbr})
                     .attr("font-size", "9px")
-                    .attr("fill", "white");
+                    .attr("fill", "black");
+
+            svg.append("g")
+                .selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                    .attr("cx", function (d) { return x(d.income); })
+                    .attr("cy", function (d) { return y(d.obesity); })
+                    .attr("r", 10)
+                    .attr("opacity", ".5")
+                    .style("fill", "#565051")
+                    .attr("class", function(d) {return d.abbr});
 
             xLabel = "Income (Median)";
             yLabel = "Obesity (%)";
